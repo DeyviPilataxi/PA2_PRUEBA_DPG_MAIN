@@ -18,6 +18,11 @@ public class App {
                 System.out.println("CASO 2...");
                 service.registrar(pedidoPequeño);
 
+                // CASO 3
+                Pedido pedidoMedio = new Pedido("maria", "gaseosa", 75, "se envio un whatsapp");
+                System.out.println("caso3");
+                service.registrar(pedidoMedio);
+
                 System.out.println("--- Fin ---");
         }
 

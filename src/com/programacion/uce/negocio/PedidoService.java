@@ -28,6 +28,7 @@ public class PedidoService {
 
     private NotificadorMail mail = new NotificadorMail();
     private NotificadorSms sms = new NotificadorSms();
+    private NotificadorWhatsapp wat = new NotificadorWhatsapp();
 
     public void registrar(Pedido pedido) {
         System.out.println("Registrando pedido...");
@@ -35,12 +36,21 @@ public class PedidoService {
         System.out.println("Total: " + pedido.getTotal());
         System.out.println("Guardando en la base de datos...");
 
-        // Lógica: Si el total es mayor a 100 -> Mail. Si no -> SMS.
         if (pedido.getTotal() > 100) {
-            mail.enviar(pedido.getCorreo(), "Su pedido supera los 100. Notificación por Mail.");
-        } else {
-            sms.enviar(pedido.getCorreo(), "Su pedido es menor a 100. Notificación por SmS.");
-        }
-    }
+            // Caso 1: Mail
+            NotificadorMail n1 = new NotificadorMail();
+            n1.enviar(pedido.getCorreo(), "Se ha creado un pedido para ser atendido (Email)");
 
+        } else if (pedido.getTotal() < 50) {
+            // Caso 3: WhatsApp (Nombre de clase corregido aquí)
+            NotificadorWhatsapp n3 = new NotificadorWhatsapp();
+            n3.enviar(pedido.getCliente(), "Se ha creado un pedido para ser atendido (WhatsApp)");
+
+        } else {
+            // Caso 2: SMS (Entre 50 y 100)
+            NotificadorSms n2 = new NotificadorSms();
+            n2.enviar(pedido.getCliente(), "Se ha creado un pedido para ser atendido (SMS)");
+        }
+
+    }
 }
